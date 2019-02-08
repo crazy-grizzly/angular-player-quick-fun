@@ -1,3 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~loaders.css/src/loaders.scss";
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/themes/nova-light/theme.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~material-design-icons/iconfont/material-icons.css";
 
 @import "core/variables";
+@import "core/layout";
+
+@import "components/loaders";
+
+@import "pages/dashboard";

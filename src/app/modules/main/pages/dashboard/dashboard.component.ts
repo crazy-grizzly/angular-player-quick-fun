@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 
 import { SearchService } from '../../../../core/services/search.service';
+import { PodcastCategory } from '../../../../interfaces/podcast-category.interface';
+import { PodcastCategoriesService } from '../../../../core/http/podcast-categories.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,10 +14,15 @@ import { SearchService } from '../../../../core/services/search.service';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
+  isLoading = true;
+
+  categories: PodcastCategory[] = [];
+
   private destroyedSubject = new Subject<void>();
 
   constructor(
-    private ss: SearchService
+    private ss: SearchService,
+    private pcs: PodcastCategoriesService
   ) {
 
   }
@@ -28,6 +35,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
       )
       .subscribe(query => {
         console.log('dashboard: query change', query);
+
+        this.getData();
+      });
+
+    this.getData();
+  }
+
+  getData(): void {
+    this.isLoading = true;
+
+    this.pcs
+      .getList()
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe(categories => {
+        this.categories = categories;
       });
   }
 

@@ -1,3 +1,34 @@
-<p>
-  dashboard works!
-</p>
+<loaders-css
+  class="main-loader"
+  [loader]="'ball-beat'"
+  *ngIf="isLoading"
+></loaders-css>
+<tabset
+  *ngIf="!isLoading"
+>
+  <tab
+    *ngFor="let c of categories; let i = index"
+    [heading]="c.name"
+    [id]="'tab_' + i"
+  >
+    <div class="podcast-list">
+      <div
+        class="podcast-list-item"
+        *ngFor="let p of c.podcasts"
+        [routerLink]="'/podcast/' + p.id"
+      >
+        <div class="podcast-list-item__logo">
+          <app-image [src]="p.logo"></app-image>
+        </div>
+        <div class="podcast-list-item__info">
+          <div class="podcast-list-item__info__name">
+            {{ p.name }}
+          </div>
+          <div class="podcast-list-item__info__description">
+            {{ p.description }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+</tabset>

@@ -1,0 +1,15 @@
+.container {
+  position: relative;
+
+  .main-loader {
+    .loader {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 56px);
+      width: 100%;
+      background-color: transparentize($white, 0.5);
+    }
+  }
+}

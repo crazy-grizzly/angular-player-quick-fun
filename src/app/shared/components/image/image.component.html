@@ -1,0 +1,19 @@
+<div class="image">
+  <div
+    class="image__bg"
+    *ngIf="isLoaded && src"
+    [ngStyle]="{'background-image': 'url(' + src + ')'}"
+    [@imageShowAnimation]
+  >
+  </div>
+  <loaders-css
+    *ngIf="!isLoaded"
+    [loader]="'ball-beat'"
+  ></loaders-css>
+  <i
+    class="material-icons"
+    *ngIf="!src"
+  >
+    crop_original
+  </i>
+</div>
