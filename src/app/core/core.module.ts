@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const COMPONENTS = [
   HeaderComponent,
@@ -20,6 +21,8 @@ const COMPONENTS = [
   imports: [
     // Notice: Importing `RouterModule` is required to bring MainLayoutComponent to work because of `router-outlet` usage
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     CommonModule
   ]
 })
