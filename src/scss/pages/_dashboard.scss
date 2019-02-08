@@ -39,6 +39,10 @@
         }
       }
     }
+
+    .image__bg {
+      border-radius: 50%;
+    }
   }
 
   &__info {
@@ -49,13 +53,13 @@
     justify-content: space-between;
 
     &__name {
-      font-size: 22px;
+      font-size: 1.5em;
       padding-bottom: 20px;
       padding-top: 10px;
     }
 
     &__description {
-      font-size: 13px;
+      font-size: 0.8em;
       padding-bottom: 10px;
     }
   }

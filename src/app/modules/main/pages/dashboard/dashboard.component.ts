@@ -1,11 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { Subject } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 
 import { SearchService } from '../../../../core/services/search.service';
 import { PodcastCategory } from '../../../../interfaces/podcast-category.interface';
 import { PodcastCategoriesService } from '../../../../core/http/podcast-categories.service';
+import { PodcastsService } from '../../../../core/http/podcasts.service';
+import { groupBy } from 'lodash-es';
+import { Podcast } from '../../../../interfaces/podcast.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +25,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private ss: SearchService,
-    private pcs: PodcastCategoriesService
+    private pcs: PodcastCategoriesService,
+    private ps: PodcastsService
   ) {
 
   }
@@ -45,14 +49,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getData(): void {
     this.isLoading = true;
 
-    this.pcs
-      .getList()
+    combineLatest(
+      this.pcs.getList(),
+      this.ps.getList()
+    )
       .pipe(
         finalize(() => {
           this.isLoading = false;
         })
       )
-      .subscribe(categories => {
+      .subscribe(responses => {
+        let categories: PodcastCategory[] = [];
+        let podcasts: Podcast[] = [];
+
+        [categories, podcasts] = responses;
+
+        const podcastGroups = groupBy(podcasts, 'categoryId');
+
+        categories = categories.map(c => {
+          c.podcasts = podcastGroups[c.id];
+
+          return c;
+        });
+
         this.categories = categories;
       });
   }

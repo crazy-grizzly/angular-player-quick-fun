@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
 import { PodcastCategory } from '../../interfaces/podcast-category.interface';
 import { podcastCategories } from '../../fixtures/podcast-categories.fixture';

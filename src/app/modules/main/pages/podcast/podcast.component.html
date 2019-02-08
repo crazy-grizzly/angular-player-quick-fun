@@ -1,3 +1,21 @@
-<p>
-  podcast works!
-</p>
+<loaders-css
+  class="main-loader"
+  [loader]="'ball-beat'"
+  *ngIf="isLoading"
+></loaders-css>
+<div
+  class="podcast"
+  *ngIf="podcast"
+>
+  <div class="podcast__header">
+    <div class="podcast__header__bg">
+      <app-image [src]="podcast.logo"></app-image>
+    </div>
+    <div class="podcast__header__title">
+      {{ podcast.name }}
+    </div>
+  </div>
+  <div class="podcast__description">
+    {{ podcast.description }}
+  </div>
+</div>

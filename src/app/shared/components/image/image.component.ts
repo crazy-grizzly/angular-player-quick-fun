@@ -40,13 +40,10 @@ export class ImageComponent implements OnInit {
       return;
     }
 
-    console.log('there is some src');
-
     const img = new Image();
 
     img.onload = () => {
       this.isLoaded = true;
-      console.log('loaded');
       this.cdr.markForCheck();
     };
 
