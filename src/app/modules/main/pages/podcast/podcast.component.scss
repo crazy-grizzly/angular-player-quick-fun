@@ -1,3 +1,104 @@
+@import "../../../../../scss/core/variables";
+
 :host {
   display: block;
+
+  .podcast {
+    padding: 20px 0;
+
+    &__header {
+      position: relative;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5em;
+
+      &:hover {
+        ::ng-deep {
+          .image__bg {
+            transform: scale(1.05);
+          }
+        }
+      }
+
+      &__bg {
+        transition: opacity 0.2s ease-in-out;
+        opacity: 0.3;
+        position: absolute;
+        width: 100%;
+
+        ::ng-deep {
+          .loader {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          app-image {
+            overflow: hidden;
+            border-radius: 5px;
+
+            .image__bg {
+              transition: all 1s ease-in-out;
+              padding-bottom: 0 !important;
+              height: 250px;
+            }
+          }
+        }
+      }
+    }
+
+    &__description {
+      padding-top: 20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      font-size: 1em;
+    }
+
+  }
+
+  .podcast-track {
+    display: flex;
+    padding: 20px;
+    align-items: stretch;
+
+    &__controls {
+
+      .material-icons {
+        display: block;
+        font-size: 4em;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        color: $gray;
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    &__info {
+      padding-left: 20px;
+      flex-grow: 1;
+    }
+  }
+
+  .track-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    &__name {
+      font-size: 1.2em;
+      padding-bottom: 0.5em;
+    }
+
+    &__duration {
+      color: $light-gray;
+      font-size: 1em;
+    }
+  }
 }

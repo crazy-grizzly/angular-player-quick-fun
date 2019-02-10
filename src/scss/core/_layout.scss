@@ -1,5 +1,11 @@
+* {
+  -webkit-backface-visibility: hidden;
+}
+
 .container {
   position: relative;
+  padding-bottom: 125px;
+  padding-top: 56px;
 
   .main-loader {
     .loader {
@@ -7,7 +13,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: calc(100vh - 56px);
+      height: 100%;
       width: 100%;
       background-color: transparentize($white, 0.5);
     }

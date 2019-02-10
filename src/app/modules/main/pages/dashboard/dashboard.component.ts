@@ -38,15 +38,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         takeUntil(this.destroyedSubject)
       )
       .subscribe(query => {
-        console.log('dashboard: query change', query);
-
-        this.getData();
+        this.getData(query);
       });
 
     this.getData();
   }
 
-  getData(): void {
+  getData(query?: string): void {
     this.isLoading = true;
 
     combineLatest(
@@ -59,20 +57,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe(responses => {
-        let categories: PodcastCategory[] = [];
-        let podcasts: Podcast[] = [];
-
-        [categories, podcasts] = responses;
-
+        const [categories, podcasts] = responses;
         const podcastGroups = groupBy(podcasts, 'categoryId');
 
-        categories = categories.map(c => {
+        this.categories = categories.map(c => {
           c.podcasts = podcastGroups[c.id];
 
           return c;
         });
-
-        this.categories = categories;
       });
   }
 

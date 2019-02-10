@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 const COMPONENTS = [
   HeaderComponent,
@@ -23,6 +24,7 @@ const COMPONENTS = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     CommonModule
   ]
 })

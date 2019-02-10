@@ -1,0 +1,68 @@
+@import "../../../../scss/core/variables";
+
+:host {
+  display: block;
+
+  .player {
+    width: 100%;
+    transition: bottom 2.2s ease-in-out;
+    position: fixed;
+    bottom: -$player-height;
+    box-shadow: 0 -7px 22px 0 transparentize($gray, 0.9);
+    background-color: $white;
+    min-height: 125px;
+
+    &.-show {
+      bottom: 0;
+    }
+
+    &__name {
+      text-align: center;
+      padding-top: 10px;
+    }
+
+    &__controls {
+
+    }
+  }
+}
+
+.player-duration {
+  display: flex;
+  padding: 10px 0;
+
+  &__curr-time {
+    color: $light-gray;
+    flex: 0.15;
+    text-align: center;
+  }
+
+  &__progressbar {
+    flex: 0.7;
+    display: flex;
+    align-items: center;
+  }
+
+  &__total-time {
+    color: $light-gray;
+    flex: 0.15;
+    text-align: center;
+  }
+}
+
+.player-buttons {
+  display: flex;
+  padding-bottom: 10px;
+  justify-content: center;
+
+  .material-icons {
+    transition: all 0.2s ease-in-out;
+    font-size: 2em;
+    margin: 0 15px;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

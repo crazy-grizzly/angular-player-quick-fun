@@ -18,4 +18,29 @@
   <div class="podcast__description">
     {{ podcast.description }}
   </div>
+  <div class="podcast__tracks">
+    <div
+      class="podcast-track"
+      *ngFor="let t of podcast.tracks"
+    >
+      <div class="podcast-track__controls">
+        <i
+          class="material-icons"
+          (click)="onPlayClick(t, podcast)"
+        >
+          play_arrow
+        </i>
+      </div>
+      <div class="podcast-track__info">
+        <div class="track-info">
+          <div class="track-info__name">
+            {{ t.name }}
+          </div>
+          <div class="track-info__duration">
+            {{ t.duration }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

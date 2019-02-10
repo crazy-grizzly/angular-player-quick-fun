@@ -1,7 +1,7 @@
 import { Podcast } from './podcast.interface';
 
 export interface PodcastCategory {
-  id: number;
+  id: string;
   name: string;
   podcasts: Podcast[];
 }

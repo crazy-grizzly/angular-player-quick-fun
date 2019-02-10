@@ -34,7 +34,6 @@ export class ImageComponent implements OnInit {
 
   ngOnInit() {
     if (!this.src) {
-      console.log('no src');
       this.isLoaded = true;
 
       return;

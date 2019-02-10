@@ -2,8 +2,8 @@ import { Podcast } from '../interfaces/podcast.interface';
 
 export const podcasts: Podcast[] = [
   {
-    id: 1,
-    categoryId: 1,
+    id: '1',
+    categoryId: '1',
     name: 'Nature',
     description: 'Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,' +
       ' totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, ' +
@@ -15,8 +15,8 @@ export const podcasts: Podcast[] = [
     tracks: []
   },
   {
-    id: 2,
-    categoryId: 1,
+    id: '2',
+    categoryId: '1',
     name: 'Space',
     description: 'Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,' +
       ' totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, ' +
@@ -28,8 +28,8 @@ export const podcasts: Podcast[] = [
     tracks: []
   },
   {
-    id: 3,
-    categoryId: 1,
+    id: '3',
+    categoryId: '1',
     name: 'Cars',
     description: 'Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,' +
       ' totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, ' +

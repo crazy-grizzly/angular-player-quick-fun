@@ -1,9 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+
+import { combineLatest, Subject } from 'rxjs';
+import { finalize, map, takeUntil } from 'rxjs/operators';
+
 import { Podcast } from '../../../../interfaces/podcast.interface';
 import { PodcastsService } from '../../../../core/http/podcasts.service';
+import { TracksService } from '../../../../core/http/tracks.service';
+import { Track } from '../../../../interfaces/track.interface';
+import { PlayerService } from '../../../../core/services/player.service';
 
 @Component({
   selector: 'app-podcast',
@@ -20,7 +25,9 @@ export class PodcastComponent implements OnInit, OnDestroy {
 
   constructor(
     private ar: ActivatedRoute,
-    private ps: PodcastsService
+    private ps: PodcastsService,
+    private ts: TracksService,
+    private pls: PlayerService
   ) {
 
   }
@@ -30,11 +37,20 @@ export class PodcastComponent implements OnInit, OnDestroy {
       .params
       .pipe(takeUntil(this.destroyedSubject))
       .subscribe(params => {
-        console.log('params', params);
-
-        this.ps
-          .getById(parseInt(params.id, 10))
+        combineLatest(
+          this.ps.getById(params.id),
+          this.ts.getList(params.id)
+        )
           .pipe(
+            map(([podcast, tracks]) => {
+              if (!podcast) {
+                return;
+              }
+
+              podcast.tracks = tracks;
+
+              return podcast;
+            }),
             finalize(() => {
               this.isLoading = false;
             })
@@ -43,6 +59,16 @@ export class PodcastComponent implements OnInit, OnDestroy {
             this.podcast = podcast;
           });
       });
+  }
+
+  onPlayClick(track: Track, podcast: Podcast): void {
+    this.pls.currentTrack = track;
+    this.pls.queue = podcast.tracks;
+    this.pls.play();
+  }
+
+  onPauseClick(): void {
+    this.pls.pause();
   }
 
   ngOnDestroy(): void {
