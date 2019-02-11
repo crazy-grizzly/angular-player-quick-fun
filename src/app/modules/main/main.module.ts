@@ -8,14 +8,18 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { PodcastComponent } from './pages/podcast/podcast.component';
 import { MainRoutingModule } from './main-routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { PodcastsListComponent } from './components/podcasts-list/podcasts-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    PodcastComponent
+    PodcastComponent,
+    PodcastsListComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MainRoutingModule,
     LoadersCssModule,
     TabsModule.forRoot(),

@@ -1,0 +1,33 @@
+<loaders-css
+  class="podcasts-loader"
+  [loader]="'ball-beat'"
+  *ngIf="isLoading"
+></loaders-css>
+<div
+  class="podcast-list"
+  *ngIf="!isLoading"
+>
+  <div
+    class="podcast-list-item"
+    *ngFor="let p of podcasts"
+    [routerLink]="'/podcast/' + p.id"
+  >
+    <div class="podcast-list-item__logo">
+      <app-image [src]="p.logo"></app-image>
+    </div>
+    <div class="podcast-list-item__info">
+      <div class="podcast-list-item__info__name">
+        {{ p.name }}
+      </div>
+      <div class="podcast-list-item__info__description">
+        {{ p.description }}
+      </div>
+    </div>
+  </div>
+  <div
+    class="d-flex align-items-center justify-content-center mt-5"
+    *ngIf="!isLoading && !podcasts.length"
+  >
+    No data here
+  </div>
+</div>

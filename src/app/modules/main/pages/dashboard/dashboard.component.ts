@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { combineLatest, Subject } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, takeUntil } from 'rxjs/operators';
 
 import { SearchService } from '../../../../core/services/search.service';
 import { PodcastCategory } from '../../../../interfaces/podcast-category.interface';
 import { PodcastCategoriesService } from '../../../../core/http/podcast-categories.service';
 import { PodcastsService } from '../../../../core/http/podcasts.service';
-import { groupBy } from 'lodash-es';
 import { Podcast } from '../../../../interfaces/podcast.interface';
+import { PodcastsQuery } from '../../../../interfaces/queries/podcasts-query.interface';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,9 +18,17 @@ import { Podcast } from '../../../../interfaces/podcast.interface';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  isLoading = true;
+  isCategoriesLoading = true;
+  isPodcastsLoading = true;
+
+  searchControl = new FormControl();
 
   categories: PodcastCategory[] = [];
+  currentCategory: PodcastCategory;
+
+  podcasts: Podcast[] = [];
+
+  query: string;
 
   private destroyedSubject = new Subject<void>();
 
@@ -32,39 +41,65 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.ss
-      .query$
+    this.searchControl
+      .valueChanges
       .pipe(
+        distinctUntilChanged(),
+        debounceTime(300),
         takeUntil(this.destroyedSubject)
       )
       .subscribe(query => {
-        this.getData(query);
+        this.query = query;
+
+        this.getPodcasts(
+          {
+            query,
+            categoryId: this.currentCategory ? this.currentCategory.id : null
+          }
+        );
       });
 
-    this.getData();
-  }
-
-  getData(query?: string): void {
-    this.isLoading = true;
-
-    combineLatest(
-      this.pcs.getList(),
-      this.ps.getList()
-    )
+    this.pcs
+      .getList()
       .pipe(
         finalize(() => {
-          this.isLoading = false;
+          this.isCategoriesLoading = false;
         })
       )
-      .subscribe(responses => {
-        const [categories, podcasts] = responses;
-        const podcastGroups = groupBy(podcasts, 'categoryId');
+      .subscribe(categories => {
+        this.categories = categories;
 
-        this.categories = categories.map(c => {
-          c.podcasts = podcastGroups[c.id];
+        this.getPodcasts(
+          (
+            this.categories
+              ? { categoryId: this.categories[0].id }
+              : null
+          )
+        );
+      });
+  }
 
-          return c;
-        });
+  onCategoryTabSelect(category: PodcastCategory): void {
+    console.log('category', category);
+    this.currentCategory = category;
+
+    this.getPodcasts({ categoryId: category.id });
+  }
+
+  private getPodcasts(query: PodcastsQuery): void {
+    this.isPodcastsLoading = true;
+    this.podcasts = [];
+
+    this.ps
+      .getList(query)
+      .pipe(
+        finalize(() => {
+          this.isPodcastsLoading = false;
+        })
+      )
+      .subscribe(podcasts => {
+        console.log('podcasts', podcasts);
+        this.podcasts = podcasts;
       });
   }
 

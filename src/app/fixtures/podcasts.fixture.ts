@@ -1,6 +1,6 @@
 import { Podcast } from '../interfaces/podcast.interface';
 
-export const podcasts: Podcast[] = [
+export const PODCASTS_FIXTURE: Podcast[] = [
   {
     id: '1',
     categoryId: '1',
